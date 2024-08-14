@@ -18,7 +18,7 @@ namespace AppLanchesMac.Models
 
         [StringLength(200, ErrorMessage = "The max size is 200 characters")]
         [Required(ErrorMessage = "enter the caregory description")]
-        [Display(Name = "Nome")]
+        [Display(Name = "Descrição")]
         public string Descricao{ get; set; }
         
         

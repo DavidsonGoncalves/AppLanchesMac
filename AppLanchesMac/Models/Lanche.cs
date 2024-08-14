@@ -6,6 +6,9 @@ namespace AppLanchesMac.Models
     [Table("Lanches")]
     public class Lanche
     {
+        [Key]
+        public int LancheId { get; set; }
+
         [Required(ErrorMessage = "O nome do lanche deve ser informado")]
         [Display(Name = "Nome do Lanche")]
         [StringLength(80, MinimumLength = 10, ErrorMessage = "O {0} deve ter no mínimo {1} e no máximo {2} caracteres")]
