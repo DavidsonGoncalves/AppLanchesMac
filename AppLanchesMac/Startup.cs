@@ -1,4 +1,5 @@
 ﻿using AppLanchesMac.Context;
+using AppLanchesMac.Models;
 using AppLanchesMac.Repositories;
 using AppLanchesMac.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -19,8 +20,12 @@ public class Startup
         services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         services.AddTransient<ILancheRepository, LancheRepository>();
         services.AddTransient<ICategoriaRepository, CategoriaRepository>();
+        services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp));
 
         services.AddControllersWithViews();
+        services.AddMemoryCache();
+        services.AddSession();
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +45,7 @@ public class Startup
         app.UseStaticFiles();
 
         app.UseRouting();
+        app.UseSession();
 
         app.UseAuthorization();
 
