@@ -3,6 +3,7 @@ using AppLanchesMac.Repositories;
 using AppLanchesMac.Repositories.Interfaces;
 using AppLanchesMac.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor.Compilation;
 
 namespace AppLanchesMac.Controllers
 {
@@ -51,6 +52,34 @@ namespace AppLanchesMac.Controllers
         {
             var lanche= _lancherepository.Lanches.FirstOrDefault(l =>  l.LancheId == lancheId);
             return View(lanche);
+        }
+
+        public ViewResult Search(string searchString)
+        {
+
+            IEnumerable<Lanche> lanches;
+            string categoriaAtual = string.Empty;
+
+            if (string.IsNullOrEmpty(searchString))
+            {
+                lanches = _lancherepository.Lanches.OrderBy(p => p.LancheId);
+                categoriaAtual = "Todos os Lanches";
+            }
+            else
+            {
+                lanches = _lancherepository.Lanches.Where(p=> p.Nome.ToLower().Contains(searchString.ToLower()));
+                if(lanches.Any())
+                {
+                    categoriaAtual = "Lanches";
+                }
+                else
+                {
+                    categoriaAtual= "Nenhum Lanche foi encontrado";
+                }
+
+            }
+            return View("~/Views/Lanche/List.cshtml", new LanchesListViewModel { Lanches = lanches, CategoriaAtual = categoriaAtual });
+
         }
     }
 }
