@@ -1,5 +1,6 @@
 ﻿using AppLanchesMac.Models;
 using AppLanchesMac.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 //using AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +18,7 @@ namespace AppLanchesMac.Controllers
             _carrinhocompra = carrinhocompra;
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult Checkout()
         {
